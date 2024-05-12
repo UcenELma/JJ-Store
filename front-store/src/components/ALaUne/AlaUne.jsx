@@ -1,7 +1,9 @@
 import React from "react";
-import une1 from "../../../../../IMG/bg/img3.webp";
-// import une2 from "../../../../../IMG/bg/img1.jpeg";
-// import une4 from "../../../../../IMG/bg/bg5.png";
+
+
+import une1 from "../../assets/IMG/bg/img3.webp";
+// import une2 from "../../IMG/bg/img1.jpeg";
+// import une4 from "../../IMG/bg/bg5.png";
 
 import Button from "../Shared/Button";
 

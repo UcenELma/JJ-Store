@@ -1,7 +1,7 @@
 import React from "react";
-import img1 from "../../../../../IMG/hero/jwl5.png";
-import img2 from "../../../../../IMG/hero/jwl5.png";
-import img3 from "../../../../../IMG/hero/jwl5.png";
+import img1 from "../../assets/IMG/hero/jwl5.png";
+import img2 from "../../assets/IMG/hero/jwl5.png";
+import img3 from "../../assets/IMG/hero/jwl5.png";
 
 const categories = [
   {

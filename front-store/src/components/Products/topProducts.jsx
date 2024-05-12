@@ -124,7 +124,7 @@
 
 import React, { useState } from "react";
 // import { LiaEyeSolid } from "react-icons/lia"; // Import the Eye icon from your icon library
-import img1 from "../../../../../IMG/hero/jwl5.png";
+import img1 from "../../assets/IMG/hero/jwl5.png";
 
 const topProducts = [
   {

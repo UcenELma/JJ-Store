@@ -1,5 +1,5 @@
 import React from "react";
-import JJBalckLogo from "../../assets/IMG/png/9.png";
+import JJBalckLogo from "../../assets/IMG/JJ-logo/png/9.png";
 import { IoSearch } from "react-icons/io5";
 import { FiUser } from "react-icons/fi";
 import { HiOutlineShoppingBag } from "react-icons/hi2";

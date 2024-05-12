@@ -3,10 +3,11 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { GoChevronLeft, GoChevronRight } from "react-icons/go";
-import jwl3 from "../../../../../IMG/hero/jwl3.png";
-import jwl5 from "../../../../../IMG/hero/jwl5.png";
-import jwl7 from "../../../../../IMG/hero/jwl7.png";
-import jwl8 from "../../../../../IMG/hero/jwl8.png";
+
+import jwl3 from "../../assets/IMG/hero/jwl3.png";
+import jwl5 from "../../assets/IMG/hero/jwl5.png";
+import jwl7 from "../../assets/IMG/hero/jwl7.png";
+import jwl8 from "../../assets/IMG/hero/jwl8.png";
 import Button from "../Shared/Button";
 
 const HeroData = [

@@ -1,7 +1,8 @@
 import React from "react";
 import { TEInput, TERipple } from "tw-elements-react";
-import logo from "../../../../../IMG/JJ-logo/png/3.png";
-import bg1 from "../../../../../IMG/bg/bg1.jpeg"; // Import the bg1 image
+
+import logo from "../../assets/IMG/JJ-logo/png/3.png";
+import bg1 from "../../assets/IMG/bg/bg1.jpeg"; // Import the bg1 image
 
 const Signup = () => {
   return (
