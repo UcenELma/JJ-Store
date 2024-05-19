@@ -7,7 +7,7 @@ const Footer = () => {
         <span className="dark:text-gray-600">
           <div className="py-1 border-gray-300">
             <div className="container mx-auto flex justify-center relative">
-              <nav className="flex gap-20">
+              <nav className="grid grid-cols-2 mx-auto gap-x-3 gap-y-8 sm:grid-cols-3 md:grid-cols-4 gap-20">
                 <a
                   href="#"
                   className="font-bold uppercase text-black hover:text-black px-23 py-2 "

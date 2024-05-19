@@ -51,7 +51,7 @@ const Hero = () => {
     speed: 2200,
     autoplay: true, // Autoplay enabled
     slidesToScroll: 1,
-    autoplaySpeed: 900,
+    autoplaySpeed: 1900,
     pauseOnHover: false,
     pauseOnFocus: true,
     className: "slick-container",

@@ -32,6 +32,9 @@ import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import Signin from './components/Sign/Signin'
 import Signup from './components/Sign/Signup'
 import Landing from './Pages/Landing'
+import OverviewProduct from './components/Products/OverviewProduct'
+import Profil from './components/Navbar/Profil'
+// import ViewProduct from './components/Products/ViewProduct'
 
 
 const App = () => {
@@ -42,6 +45,9 @@ const App = () => {
           <Route path='/login' element={<Signin/>}/>
           <Route path='/register' element={<Signup/>}/>
           <Route path='/' element={<Landing/>}/>
+          <Route path='/products' element={<OverviewProduct/>}/>
+          <Route path='/profil' element={<Profil/>}/>
+
         </Routes>
       </BrowserRouter>
     </>
