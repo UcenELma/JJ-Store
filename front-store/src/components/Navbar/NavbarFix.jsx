@@ -21,7 +21,7 @@ const NavbarFix = () => {
       <div className="py-3 mb-4 border-t border-b border-gray-500  backdrop-blur-lg bg-white relative z-30">
         <div className="container mx-auto flex justify-center relative"> 
           <nav className="flex gap-20">
-            <a href="#" className="font-semibold font-light text-gray-500 hover:text-black px-3 py-2 ">Lorelor</a>
+            <a href="#" className="font-semibold font-light text-gray-500 hover:text-black px-3 py-2 ">Test</a>
             <a href="#" className="font-semibold font-light text-gray-500 hover:text-black px-3 py-2 ">consectetur</a>
             <a href="#" className="font-semibold font-light text-gray-500 hover:text-black px-3 py-2 ">sitamet</a>
             <a href="#" className="font-semibold font-light text-gray-500 hover:text-black px-3 py-2 ">dolorolor</a>
