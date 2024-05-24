@@ -1,11 +1,14 @@
 // import React from "react";
-import React, {useState, useRef, useEffect } from "react";
-import img1 from "../../assets/IMG/hero/jwl5.png";
-import { CardFooter, Button, IconButton } from "@material-tailwind/react";
-import CartSidebar from "../CartSidebar";
 
+import img1 from "../../assets/IMG/hero/jwl5.png";
+import { CardFooter, Button } from "@material-tailwind/react";
+
+import {Link} from "react-router-dom"
+import { addToCart, openCart } from "../../features/cartSlice";
+import { useDispatch } from "react-redux";
 const topProducts = [
   {
+    id:1,
     img: img1,
     title: "Ring",
     description: "Lorem ipsum dolor, sit amet consectr adipisicing elit amet.",
@@ -13,6 +16,7 @@ const topProducts = [
     rating: 3,
   },
   {
+    id:2,
     img: img1,
     title: "Ring",
     description: "Lorem ipsum dolor, sit amet consectr adipisicing elit amet.",
@@ -20,6 +24,7 @@ const topProducts = [
     rating: 3,
   },
   {
+    id:3,
     img: img1,
     title: "Ring",
     description: "Lorem ipsum dolor, sit amet consectr adipisicing elit amet.",
@@ -27,6 +32,7 @@ const topProducts = [
     rating: 3,
   },
   {
+    id:4,
     img: img1,
     title: "Ring",
     description: "Lorem ipsum dolor, sit amet consectr adipisicing elit amet.",
@@ -36,28 +42,13 @@ const topProducts = [
 ];
 
 const TopProductsComponent = () => {
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const cartRef = useRef(null);
 
-  useEffect(() => {
-    // Add event listener to handle clicks outside of the cart sidebar
-    const handleClickOutside = (event) => {
-      if (cartRef.current && !cartRef.current.contains(event.target)) {
-        setIsCartOpen(false);
-      }
-    };
+ 
+  const dispatch = useDispatch()
 
-    // Attach the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-
-    // Clean up the event listener on component unmount
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const toggleCart = () => {
-    setIsCartOpen((prevIsCartOpen) => !prevIsCartOpen);
+  const toggleCart = (product) => {
+    dispatch(addToCart(product))
+   dispatch( openCart());
   };
   
   const renderStars = (rating) => {
@@ -119,11 +110,14 @@ const TopProductsComponent = () => {
               key={index}
               className="w-60 pt-2 pl-2 pr-2 m-auto bg-gray-300 shadow-lg rounded-lg"
             >
+              <Link to="/products">
+              
               <img
                 src={product.img}
                 alt="ring product"
                 className="w-60 bg-white m-auto h-60 rounded-xl hover:scale-105 hover:shadow-lg focus:scale-105 focus:shadow-xl active:scale-100 cursor-pointer"
               />
+              </Link>
               <div className="pl-1 mt-6">
                 <p className="text-lg font-mono font-semibold text-orange-600 text-left ">
                   {product.title}
@@ -136,7 +130,7 @@ const TopProductsComponent = () => {
                   <div className="flex">{renderStars(product.rating)}</div>
                 </div>
                 <CardFooter className="pt-0">
-                  <Button onClick={toggleCart}
+                  <Button onClick={()=>toggleCart(product)}
                     ripple={false}
                     fullWidth={true}
                     className="bg-white text-blue-gray-900 shadow-none hover:scale-105 hover:shadow-none focus:scale-105 focus:shadow-none active:scale-100 mt-4"
@@ -149,10 +143,9 @@ const TopProductsComponent = () => {
           ))}
         </div>
       </div>
-      {isCartOpen && <div ref={cartRef}><CartSidebar/> </div>}
+
     </div>
   );
 };
 
 export default TopProductsComponent;
-

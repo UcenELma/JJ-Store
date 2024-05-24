@@ -1,45 +1,25 @@
-// import React from 'react'
-// import Navbar from './components/Navbar/Navbar'
-// import Hero from './components/Hero/Hero'
-// import Category from './components/Category/Category'
-// import TopProducts from './components/Products/topProducts'
-// import AlaUne from './components/ALaUne/AlaUne'
-// import NavbarFix from './components/Navbar/NavbarFix'
-// import Footer from './components/Footer/Footer'
-// import Signin from './components/Sign/Signin'
-// import Signup from './components/Sign/Signup'
 
-// const App = () => {
-//   return (
-//     <div>
-//       <Signup/>
-//       <Signin/>
-//       <Navbar/>
-//       <NavbarFix/>
-//       <Hero/>
-//       <Category/>
-//       <TopProducts/>
-//       <AlaUne/>
-//       <Footer/>
-//     </div>
-//   )
-// }
-
-// export default App
-
-import React from 'react'
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import Signin from './components/Sign/Signin'
+import { Provider, useSelector } from 'react-redux'
+
 import Signup from './components/Sign/Signup'
 import Landing from './Pages/Landing'
 import OverviewProduct from './components/Products/OverviewProduct'
 import Profil from './components/Navbar/Profil'
+
+import CartSidebar from './components/CartSidebar'
+
 // import ViewProduct from './components/Products/ViewProduct'
 
 
 const App = () => {
+  const isCartOpen = useSelector((state => state.cart.isCartOpen))
   return (
-    <>
+   
+
+
+
       <BrowserRouter>
         <Routes>
           <Route path='/login' element={<Signin/>}/>
@@ -47,10 +27,13 @@ const App = () => {
           <Route path='/' element={<Landing/>}/>
           <Route path='/products' element={<OverviewProduct/>}/>
           <Route path='/profil' element={<Profil/>}/>
-
+       
         </Routes>
+        {isCartOpen && <div ><CartSidebar/> </div>}
       </BrowserRouter>
-    </>
+
+
+   
   )
 }
 export default App
