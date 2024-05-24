@@ -19,13 +19,18 @@ const categories = [
     title: "Ring",
     description: "Detail is not an obsession, it is the very essence of perfection.",
   },
+  {
+    img: img3,
+    title: "Ring",
+    description: "Detail is not an obsession, it is the very essence of perfection.",
+  },
 ];
 
 const Category = () => {
   return (
     <div className="py-8">
-      <div className="container mx-auto px-40">
-        <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-cols-3 gap-8">
+      <div className="container mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {categories.map((category, index) => (
             <div key={index} className="relative w-70 p-7 overflow-hidden bg-gray-700 shadow-lg rounded-xl">
               <img alt="cat" src={category.img} className="absolute w-40 h-40 mb-4 -right-20 -bottom-10" />

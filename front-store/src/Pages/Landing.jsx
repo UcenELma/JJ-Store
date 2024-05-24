@@ -10,13 +10,13 @@ import Footer from '../components/Footer/Footer'
 const Landing = () => {
   return (
     <div>
-      <Navbar/>
-      <NavbarFix/>
+      {/* <Navbar/>
+      <NavbarFix/> */}
       <Hero/>
       <Category/>
       <TopProducts/>
       <AlaUne/>
-      <Footer/>
+      {/* <Footer/> */}
     </div>
   )
 }
