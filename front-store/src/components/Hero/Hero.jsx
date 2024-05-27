@@ -72,7 +72,7 @@ const Hero = () => {
 
   return (
     <div className="container mx-auto">
-      <div className="overflow-hidden rounded-3xl bg-gradient-to-r from-gray-400/80 to-gray-100 relative">
+      <div className="overflow-hidden rounded-xl bg-gradient-to-r from-gray-400/80 to-gray-100 relative">
         <Slider ref={sliderRef} {...settings}>
           {HeroData.map((data) => (
             <div key={data.id}>

@@ -5,7 +5,7 @@ import product2 from "../..//assets/IMG/bg/img4.jpeg";
 import product3 from "../../assets/IMG/p/p1.jpeg";
 import product4 from "../../assets/IMG/p/p2.jpeg";
 
-const TopProducts = () => {
+const FeaturedProducts = () => {
   const [likedProducts, setLikedProducts] = useState([]); // State to track liked products
 
   const products = [
@@ -61,10 +61,10 @@ const TopProducts = () => {
   return (
     <div>
       <section>
-        <div className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+        <div className="mx-auto max-w-screen-xl  px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
           <header className="text-center">
             <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
-              Product Collection
+            Featured Products
             </h2>
             <p className="mx-auto mt-4 max-w-md text-gray-500">
               Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
@@ -72,7 +72,7 @@ const TopProducts = () => {
               fugit natus?
             </p>
           </header>
-          <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-8  grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {/* Map over products array and render each product */}
             {products.map((product, index) => (
               <li key={index} className="relative">
@@ -104,7 +104,7 @@ const TopProducts = () => {
                 <div className="relative bg-white pt-3">
                   <h3 className="text-xs text-gray-700">{product.title}</h3>
                   <p className="mt-2 flex justify-between">
-                    <span className="sr-only"> Regular Price </span>
+                    <span className="sr-only"> Regular AAAAAAAA Price </span>
                     <span className="tracking-wider text-gray-900">
                       {" "}
                       {product.price}{" "}
@@ -122,7 +122,7 @@ const TopProducts = () => {
   );
 };
 
-export default TopProducts;
+export default FeaturedProducts;
 
 
 // import React, { useState, useRef, useEffect } from "react";
@@ -130,6 +130,8 @@ export default TopProducts;
 // import img1 from "../../assets/IMG/hero/jwl5.png";
 // import { CardFooter, Button } from "@material-tailwind/react";
 // import CartSidebar from "../CartSidebar";
+
+
 
 // const topProducts = [
 //  {
@@ -166,10 +168,12 @@ export default TopProducts;
 //   },
 // ];
 
-// const TopProductsComponent = () => {
+// const FeaturedProducts = () => {
 //  const [isCartOpen, setIsCartOpen] = useState(false);
 //  const [heartClicked, setHeartClicked] = useState(false); // State to track if heart icon is clicked
 //  const cartRef = useRef(null);
+
+  
 
 //  useEffect(() => {
 //   const handleClickOutside = (event) => {
@@ -179,6 +183,8 @@ export default TopProducts;
 //   };
 
 //   document.addEventListener("mousedown", handleClickOutside);
+  
+  
 
 //   return () => {
 //    document.removeEventListener("mousedown", handleClickOutside);
@@ -238,17 +244,12 @@ export default TopProducts;
 //  return (
 //  <div className="py-2">
 //   <div className="container">
-//    <div className="flex justify-between items-center mx-auto px-8 mb-3 sm:mt-4 sm:pt-4">
-//     <p className="underline text-sm text-yellow-500 hover:text-orange-500">
-//      Top products
-//     </p>
-//     <p className="underline text-right text-sm text-yellow-500 hover:text-orange-500">
-//      get similar products →
-//     </p>
-//    </div>
+   
+//    <h1 className="flex justify-center m-4" style={{ fontSize: '30px' }}>Featured Products</h1>
+
 //    {/* <div className="grid grid-cols-2 sm:grid-cols-4 gap-2"> */}
 //    <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-gray-200 pt-10 md:grid-cols-2 sm:mt-4 sm:pt-4 lg:mx-0 lg:max-w-none lg:grid-cols-4">
-//     {topProducts.map((product, index) => (
+//     {topProducts.map((product, index) => ( 
 //      <div
 //       key={index}
 //       className="relative w-60 pb-4 m-auto bg-gray-300 shadow-lg rounded-lg overflow-hidden"
@@ -270,14 +271,14 @@ export default TopProducts;
 //         <div className="flex justify-between">
 //            <p className="text-lg font-mono font-semibold text-orange-600 text-left ">
 //         {product.title}
-
+        
 //        </p>
 //       <FaHeart
 //           className={`absolute right-4 cursor-pointer text-2xl ${heartClicked ? 'text-gray-900' : 'text-white'}`} // Conditionally render red or gray heart based on clicked status
 //           onClick={handleHeartClick}
 //          />
 //         </div>
-
+      
 //        <p className="text-xs text-gray-500 mb-4 mt-1">
 //         {product.description}
 //        </p>
@@ -311,4 +312,5 @@ export default TopProducts;
 // );
 // };
 
-// export default TopProductsComponent;
+// export default FeaturedProducts;
+

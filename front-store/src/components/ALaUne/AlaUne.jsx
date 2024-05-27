@@ -11,19 +11,20 @@ const alaUneData = [
     description: "For a limited time only! a kdob hadchi",
     image: une1,
   },
-  {
-    discount: "25% OFF",
-    sale: "SUMMER SALE",
-    description: "For a limited time only! a kdob hadchi",
-    image: une2,
-  },
-  {
-    discount: "15% OFF",
-    sale: "SUMMER SALE",
-    description: "For a limited time only! a kdob hadchi",
-    image: une3,
-  },
-  // Add more AlaUne items as needed following the same structure
+  // {
+  //   discount: "25% OFF",
+  //   sale: "SUMMER SALE",
+  //   description: "For a limited time only! a kdob hadchi",
+  //   image: une2,
+  // },
+  // {
+  //   discount: "15% OFF",
+  //   sale: "SUMMER SALE",
+  //   description: "For a limited time only! a kdob hadchi",
+  //   image: une3,
+  // },
+  
+  
 ];
 
 const AlaUne = () => {
