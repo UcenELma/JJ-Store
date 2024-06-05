@@ -5,7 +5,7 @@ import bg1 from "../../assets/IMG/bg/bg3.jpeg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginAction } from "../../features/authSlice";
+import { login } from "../../features/authSlice";
 import axios from "axios";
 
 
@@ -37,7 +37,7 @@ const Signin = () => {
 
       console.log(res.data);
       const { user, token } = res.data;
-      dispatch(loginAction(user));
+      dispatch(login(user));
       localStorage.setItem("userInfo", JSON.stringify(token)); // Save user info to local storage
       navigate("/");
 

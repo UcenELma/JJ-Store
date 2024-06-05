@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import request from "../../utils/request";
+// import Pagination from "@mui/material/Pagination";
 import product1 from "../../assets/IMG/bg/bg4.jpg";
 import product2 from "../../assets/IMG/bg/img4.jpeg";
 import product3 from "../../assets/IMG/p/p1.jpeg";
@@ -9,7 +10,7 @@ const AllProducts = () => {
   // Define product data
   const [products, setProducts] = useState([]);
   const [page, setPage] = useState(1);
-  const productsPerPage = 4;
+  // const productsPerPage = 4;
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchQuery, setSearchQuery] = useState(""); // Lifted state
@@ -31,17 +32,17 @@ const AllProducts = () => {
     fetchProducts();
   }, []);
 
-  const startIndex = (page - 1) * productsPerPage;
-  const endIndex = startIndex + productsPerPage;
-  const displayedProducts = products
-    .filter((product) =>
-      product.productName.toLowerCase().includes(searchQuery.toLowerCase())
-    )
-    .slice(startIndex, endIndex); // Filter based on search query
+  // const startIndex = (page - 1) * productsPerPage;
+  // const endIndex = startIndex + productsPerPage;
+  // const displayedProducts = products
+  //   .filter((product) =>
+  //     product.productName.toLowerCase().includes(searchQuery.toLowerCase())
+  //   )
+  //   .slice(startIndex, endIndex); // Filter based on search query
 
-  const handlePageChange = (event, value) => {
-    setPage(value);
-  };
+  // const handlePageChange = (event, value) => {
+  //   setPage(value);
+  // };
 
   // const products = [
   //   {
@@ -478,8 +479,9 @@ const AllProducts = () => {
                         </h3>
                         <p className="mt-2">
                           <span className="sr-only">Regular Price</span>
+                          {/* static currency */}
                           <span className="tracking-wider text-gray-900">
-                            {product.price}
+                            {product.price} MAD  
                           </span>
                         </p>
                       </div>
@@ -489,8 +491,13 @@ const AllProducts = () => {
               </ul>
             </div>
             {/* // */}
-            <div className="flex justify-center">
-            <ol className="flex justify-center gap-1 text-xs font-medium">
+            {/* <Pagination
+        count={Math.ceil(products.length / productsPerPage)} // Use total number of products for pagination
+        page={page}
+        onChange={handlePageChange}
+      /> */}
+            {/* <div className="flex justify-center"> */}
+            {/* <ol className="flex justify-center gap-1 text-xs font-medium">
               <li>
                 <a
                   href="#"
@@ -563,8 +570,8 @@ const AllProducts = () => {
                   </svg>
                 </a>
               </li>
-            </ol>
-            </div>
+            </ol> */}
+            {/* </div> */}
           </div>
         </div>
       </section>

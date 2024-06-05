@@ -1,55 +1,37 @@
-import React, { useState } from "react";
-import { FaRegHeart, FaHeart } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
-import product1 from "../../assets/IMG/bg/bg4.jpg";
-import product2 from "../../assets/IMG/bg/img4.jpeg";
-import product3 from "../../assets/IMG/p/p1.jpeg";
-import product4 from "../../assets/IMG/p/p2.jpeg";
+import React, { useState, useEffect } from 'react';
+import { FaRegHeart, FaHeart } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import request from '../../utils/request';
 
 const TopProducts = () => {
   const [likedProducts, setLikedProducts] = useState([]);
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  const products = [
-    {
-      id: 1,
-      title: "Basic Tee",
-      imageSrc: product1,
-      price: "2294.00 MAD",
-      rating: 2,
-    },
-    {
-      id: 2,
-      title: "Basic Tee",
-      imageSrc: product2,
-      price: "5949.00 MAD",
-      rating: 3,
-    },
-    {
-      id: 3,
-      title: "Basic Tee",
-      imageSrc: product3,
-      price: "24.00 MAD",
-      rating: 5,
-    },
-    {
-      id: 4,
-      title: "Basic Tee",
-      imageSrc: product4,
-      price: "9824.00 MAD",
-      rating: 5,
-    },
-  ];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await request.get('/products');
+        setProducts(response.data);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setError(error);
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
 
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 1; i <= 5; i++) {
       stars.push(
-        <span
-          key={i}
-          className={i <= rating ? "text-yellow-500" : "text-gray-300"}
-        >
-          {i <= rating ? "\u2605" : "\u2606"}
+        <span key={i} className={i <= rating ? 'text-yellow-500' : 'text-gray-300'}>
+          {i <= rating ? '\u2605' : '\u2606'}
         </span>
       );
     }
@@ -63,7 +45,7 @@ const TopProducts = () => {
   };
 
   const handleGetYoursClick = (id) => {
-    navigate(`/product/${id}`); // Navigate to the product page with the product id
+    navigate(`/product/${id}`);
   };
 
   return (
@@ -76,18 +58,16 @@ const TopProducts = () => {
                 Product Collection
               </h2>
               <p className="mx-auto mt-4 max-w-md text-gray-500">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-                praesentium cumque iure dicta incidunt est ipsam, officia dolor
-                fugit natus?
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque praesentium cumque iure dicta incidunt est ipsam, officia dolor fugit natus?
               </p>
             </header>
             <ul className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {products.map((product, index) => (
+              {products.filter(product => product.status === 'inactive').map((product, index) => (
                 <li key={index} className="relative">
                   <a className="group block overflow-hidden relative">
                     <img
-                      src={product.imageSrc}
-                      alt={product.title}
+                      src={`http://localhost:2500/${product.images[0]}`}
+                      alt={product.productName}
                       className="h-[350px] w-full object-cover transition duration-500 group-hover:scale-105 sm:h-[450px]"
                     />
                     <div className="absolute top-2 right-2">
@@ -95,31 +75,25 @@ const TopProducts = () => {
                         className="text-white hover:text-red-500"
                         onClick={() => handleLikeClick(index)}
                       >
-                        {likedProducts[index] ? (
-                          <FaHeart size={24} />
-                        ) : (
-                          <FaRegHeart size={24} />
-                        )}
+                        {likedProducts[index] ? <FaHeart size={24} /> : <FaRegHeart size={24} />}
                       </button>
                     </div>
 
                     <div className="absolute bottom-0 left-0 right-0 bg-white bg-opacity-50 text-center py-2 opacity-0 group-hover:opacity-100 hover:scale-105 transition-opacity m-2 rounded-md">
                       <button
                         className="text-gray-100 hover:text-gray-800 font-semibold"
-                        onClick={() => handleGetYoursClick(product.id)} // Add onClick handler
+                        onClick={() => handleGetYoursClick(product.id)}
                       >
                         <span className="ml-2">Get Yours</span>
                       </button>
                     </div>
                   </a>
                   <div className="relative bg-white pt-3">
-                    <h3 className="text-xs text-gray-700">{product.title}</h3>
+                    <h3 className="text-xs text-gray-700">{product.productName}</h3>
                     <p className="mt-2 flex justify-between">
-                      <span className="sr-only"> Regular Price </span>
-                      <span className="tracking-wider text-gray-900">
-                        {product.price}
-                      </span>
-                      <div>{renderStars(product.rating)}</div>
+                      <span className="sr-only">Regular Price</span>
+                      <span className="tracking-wider text-gray-900">{product.price}</span>
+                      <div>{renderStars(product.ratings)}</div>
                     </p>
                   </div>
                 </li>

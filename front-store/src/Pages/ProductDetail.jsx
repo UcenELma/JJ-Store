@@ -1,43 +1,71 @@
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import request from "../utils/request";
+import img from "../../src/assets/IMG/bg/bg1.jpeg"; // Temporary until fetching is implemented
+import Reviews from "../components/Products/Reviews";
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from "../features/authSlice";
 
-import { useState } from "react";
-import img from "../../src/assets/IMG/bg/bg1.jpeg";
-import img1 from "../../src/assets/IMG/bg/bg1.jpeg";
-import img2 from "../../src/assets/IMG/bg/bg1.jpeg";
-import img3 from "../../src/assets/IMG/bg/bg1.jpeg";
-
-
-const product = {
-  img: img,
-  img1: img1,
-  img2: img2,
-  img3: img3,
-  title: "Ring",
-  description: "This is a Gold ring.",
-  price: "1698.00 MAD",
-  rating: 3,
+// Function to render star rating based on the given rating
+const renderStars = (rating) => {
+  const stars = [];
+  for (let i = 1; i <= 5; i++) {
+    stars.push(
+      <span
+        key={i}
+        className={i <= rating ? "text-yellow-500" : "text-gray-300"}
+      >
+        {i <= rating ? "\u2605" : "\u2606"}
+      </span>
+    );
+  }
+  return stars;
 };
 
-  // Function to render star rating based on the given rating
-  const renderStars = (rating) => {
-    const stars = [];
-    for (let i = 1; i <= 5; i++) {
-      stars.push(
-        <span
-          key={i}
-          className={i <= rating ? "text-yellow-500" : "text-gray-300"}
-        >
-          {i <= rating ? "\u2605" : "\u2606"}
-        </span>
-      );
-    }
-    return stars;
-  };
-
 const ProductDetail = () => {
+  const { id } = useParams();
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const [product, setProduct] = useState(null);
+  const [reviews, setReviews] = useState([]);
   const [material, setMaterial] = useState();
   const [size, setSize] = useState();
-//   const { id } = useParams(); // Retrieve the product id from the URL
-  
+  const [averageRating, setAverageRating] = useState(0);
+  const [totalReviews, setTotalReviews] = useState(0);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await request.get(`/products/${id}`);
+        setProduct(response.data);
+      } catch (error) {
+        console.error("Error fetching product:", error);
+      }
+    };
+
+    const fetchReviews = async () => {
+      try {
+        const response = await request.get(`/reviews/product/${id}`);
+        setReviews(response.data);
+        // Calculate average rating and total reviews
+        let sum = 0;
+        response.data.forEach((review) => (sum += review.rating));
+        const avgRating = sum / response.data.length;
+        setAverageRating(avgRating.toFixed(1));
+        setTotalReviews(response.data.length);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+      }
+    };
+
+    fetchProduct();
+    fetchReviews();
+  }, [id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <section className="py-8">
       <div className="container">
@@ -48,44 +76,31 @@ const ProductDetail = () => {
                 <div className="max-w-xl overflow-hidden rounded-lg">
                   <img
                     className="h-full w-full max-w-full object-cover"
-                    src={product.img}
-                    alt=""
+                    src={
+                      product.images?.length
+                        ? `http://localhost:2500/${product.images[0]}`
+                        : img
+                    }
+                    alt={product.productName}
                   />
                 </div>
               </div>
 
               <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
                 <div className="flex flex-row items-start lg:flex-col">
-                  <button
-                    type="button"
-                    className="flex-0 aspect-square mb-3 h-40 overflow-hidden rounded-lg border-2 border-gray-900 text-center"
-                  >
-                    <img
-                      className="h-full w-full object-cover"
-                      src={product.img1}
-                      alt=""
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    className="flex-0 aspect-square mb-3 h-40 overflow-hidden rounded-lg border-2 border-transparent text-center"
-                  >
-                    <img
-                      className="h-full w-full object-cover"
-                      src={product.img2}
-                      alt=""
-                    />
-                  </button>
-                  <button
-                    type="button"
-                    className="flex-0 aspect-square mb-3 h-40 overflow-hidden rounded-lg border-2 border-transparent text-center"
-                  >
-                    <img
-                      className="h-full w-full object-cover"
-                      src={product.img3}
-                      alt=""
-                    />
-                  </button>
+                  {product.images?.map((image, index) => (
+                    <button
+                      key={index}
+                      type="button"
+                      className="flex-0 aspect-square mb-3 h-40 overflow-hidden rounded-lg border-2 border-gray-900 text-center"
+                    >
+                      <img
+                        className="h-full w-full object-cover"
+                        src={image}
+                        alt={product.productName}
+                      />
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -93,72 +108,50 @@ const ProductDetail = () => {
 
           <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
             <h1 className="sm:text-2xl font-bold text-gray-900 sm:text-3xl">
-              {product.title}
+              {product.productName}
             </h1>
-
             <div className="mt-5 flex items-center">
               <div className="flex items-center">
-              <div>{renderStars(product.rating)}</div>
+                <div>{renderStars(parseFloat(averageRating))}</div>
                 <p className="ml-2 text-sm font-medium text-gray-500">
-                  1,209 Reviews
+                  {totalReviews} {totalReviews === 1 ? "Review" : "Reviews"}
                 </p>
               </div>
             </div>
 
-            <h2 className="mt-8 text-base text-gray-900">Jewelry Material </h2>
+            <h2 className="mt-8 text-base text-gray-900">Jewelry Material</h2>
             <div className="mt-3 flex select-none flex-wrap items-center gap-1">
-              <label>
-                <button 
-                  className={`${material === 'gold' ? "bg-gray-900 text-white" : "text-black"} rounded-lg border border-black px-6 py-2 font-bold`}
-                  onClick={() => setMaterial("gold")}
+              {["gold", "silver", "palladium"].map((materialOption) => (
+                <button
+                  key={materialOption}
+                  className={`${
+                    material === materialOption
+                      ? "bg-gray-900 text-white"
+                      : "text-black"
+                  } rounded-lg border border-black px-6 py-2 font-bold`}
+                  onClick={() => setMaterial(materialOption)}
                 >
-                  Gold
+                  {materialOption.charAt(0).toUpperCase() +
+                    materialOption.slice(1)}
                 </button>
-              </label>
-              <label>
-                <button 
-                  className={`${material === 'silver' ? "bg-gray-900 text-white" : "text-black"} rounded-lg border border-black px-6 py-2 font-bold`}
-                  onClick={() => setMaterial("silver")}
-                >
-                  Silver
-                </button>
-              </label>
-              <label>
-                <button 
-                  className={`${material === 'palladium' ? "bg-gray-900 text-white" : "text-black"} rounded-lg border border-black px-6 py-2 font-bold`}
-                  onClick={() => setMaterial("palladium")}
-                >
-                  Palladium
-                </button>
-              </label>
+              ))}
             </div>
 
             <h2 className="mt-8 text-base text-gray-900">Size</h2>
             <div className="mt-3 flex select-none flex-wrap items-center gap-1">
-              <label>
-                <button 
-                  className={`${size === 16 ? "bg-gray-900 text-white" : "text-black"} rounded-lg border border-black px-6 py-2 font-bold`}
-                  onClick={() => setSize(16)}
+              {[16, 18, 20].map((sizeOption) => (
+                <button
+                  key={sizeOption}
+                  className={`${
+                    size === sizeOption
+                      ? "bg-gray-900 text-white"
+                      : "text-black"
+                  } rounded-lg border border-black px-6 py-2 font-bold`}
+                  onClick={() => setSize(sizeOption)}
                 >
-                  16
+                  {sizeOption}
                 </button>
-              </label>
-              <label>
-                <button 
-                  className={`${size === 18 ? "bg-gray-900 text-white" : "text-black"} rounded-lg border border-black px-6 py-2 font-bold`}
-                  onClick={() => setSize(18)}
-                >
-                  18
-                </button>
-              </label>
-              <label>
-                <button 
-                  className={`${size === 20 ? "bg-gray-900 text-white" : "text-black"} rounded-lg border border-black px-6 py-2 font-bold`}
-                  onClick={() => setSize(20)}
-                >
-                  20
-                </button>
-              </label>
+              ))}
             </div>
 
             <div className="mt-8 flex">
@@ -176,17 +169,19 @@ const ProductDetail = () => {
             </div>
 
             <div className="mt-10">
-              <h2 className="text-sm font-medium text-gray-900">
-                Description
-              </h2>
+              <h2 className="text-sm font-medium text-gray-900">Description</h2>
               <div className="mt-4 space-y-6">
                 <p className="text-sm text-gray-600">
-                  {product.description}
+                  {product.longDescription}
                 </p>
               </div>
             </div>
           </div>
         </div>
+      </div>
+      {/* Integrate Reviews component here */}
+      <div className="container mt-10">
+        <Reviews productId={id} />
       </div>
     </section>
   );
