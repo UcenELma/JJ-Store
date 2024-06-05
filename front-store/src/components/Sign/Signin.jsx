@@ -2,9 +2,67 @@ import React from "react";
 import { TEInput, TERipple } from "tw-elements-react";
 import logo from "../../assets/IMG/JJ-logo/png/3.png";
 import bg1 from "../../assets/IMG/bg/bg3.jpeg";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../../../../../../frontend/Front-office/client/my-app/src/redux/auth/authSlice";
+import axios from "axios"
+
 
 const Signin = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
+  const goToSignUp = () => { 
+    navigate("/register")
+  };
+  const formSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (username.trim() === "") return toast.error("Username is required");
+    if (password.trim() === "") return toast.error("Password is required");
+
+    try {
+      const res = await axios.post(
+        "http://localhost:2500/store/login",
+        {
+          username,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log(res.data);
+      const { user, token } = res.data;
+      dispatch(loginAction(user));
+      localStorage.setItem("userInfo", JSON.stringify(token)); // Save user info to local storage
+      navigate("/");
+
+      // if (res.status === 201) {
+      //   const userData = { emailOrUsername: email, password };
+      //   try {
+      //     const { data } = await request.post("/api/login", userData, {
+      //       withCredentials: true,
+      //     });
+      //     console.log(data);
+      //     const { user, token } = data;
+      //     dispatch(login(user));
+      //     localStorage.setItem("userInfo", JSON.stringify(token)); // Save user info to local storage
+      //     navigate("/");
+      //   } catch (error) {
+      //     toast.error(error.response.data.message);
+      //   }
+      // } else {
+      //   toast.error("Login failed. Please try again.");
+      // }
+    } catch (error) {
+      console.error("Error logging in:", error);
+      toast.error("Login failed. Please try again.");
+    }
+  };
   return (
     <section className="h-full bg-neutral-200 dark:bg-neutral-700">
       <div className="container h-full p-10">
@@ -25,7 +83,7 @@ const Signin = () => {
                         We are The Jewlery Junction Team
                       </h4>
                     </div>
-                    <form>
+                    <form onSubmit={formSubmitHandler}>
                       <p className="mb-4">Please login to your account</p>
                       {/* Username input */}
                       <div className="mb-4">
@@ -39,6 +97,7 @@ const Signin = () => {
                           placeholder="Username"
                           name="username"
                           autoComplete="username"
+                          onChange={(e) => setUsername(e.target.value)}
                           className="mt-1 px-3 py-2 block w-full shadow-sm border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
@@ -54,6 +113,7 @@ const Signin = () => {
                           placeholder="password"
                           name="password"
                           autoComplete="current-password"
+                          onChange={(e) => setPassword(e.target.value)}
                           className="mt-1 px-3 py-2 block w-full shadow-sm border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500"
                         />
                       </div>
@@ -62,7 +122,7 @@ const Signin = () => {
                         <TERipple rippleColor="light" className="w-full">
                           <button
                             className="mb-3 inline-block w-full rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_rgba(0,0,0,0.2)] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)] focus:outline-none focus:ring-0 active:shadow-[0_8px_9px_-4px_rgba(0,0,0,0.1),0_4px_18px_0_rgba(0,0,0,0.2)]"
-                            type="button"
+                            type="submit"
                             style={{
                               background:
                                 "linear-gradient(to right, rgba(238,119,36,1), rgba(216,54,58,1), rgba(221,54,117,1), rgba(180,69,147,1)), url(${bg1})",
@@ -79,6 +139,7 @@ const Signin = () => {
                         <TERipple rippleColor="light">
                           <button
                             type="button"
+                            onClick={() => goToSignUp()}
                             className="inline-block rounded border-2 border-danger px-6 pb-[6px] pt-2 text-xs font-medium uppercase leading-normal text-danger transition duration-150 ease-in-out hover:border-danger-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-danger-600 focus:border-danger-600 focus:text-danger-600 focus:outline-none focus:ring-0 active:border-danger-700 active:text-danger-700 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
                           >
                             <a href="">Sign up 1</a>
@@ -93,8 +154,8 @@ const Signin = () => {
                   className="flex items-center rounded-b-lg lg:w-6/12 lg:rounded-r-lg lg:rounded-bl-none"
                   style={{
                     backgroundImage: `linear-gradient(to right, rgba(238,119,36,0.8), rgba(216,54,58,0.8), rgba(221,54,117,0.8), rgba(180,69,147,0.8)), url(${bg1})`,
-                    backgroundPosition: 'center',
-                    backgroundSize: 'cover',
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
                   }}
                 >
                   <div className="px-4 py-6 text-white md:mx-6 md:p-12">
