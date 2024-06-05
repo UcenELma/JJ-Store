@@ -5,8 +5,8 @@ import bg1 from "../../assets/IMG/bg/bg3.jpeg";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { loginAction } from "../../../../../../frontend/Front-office/client/my-app/src/redux/auth/authSlice";
-import axios from "axios"
+import { loginAction } from "../../features/authSlice";
+import axios from "axios";
 
 
 const Signin = () => {
