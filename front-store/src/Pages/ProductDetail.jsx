@@ -88,23 +88,29 @@ const ProductDetail = () => {
 
               <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
                 <div className="flex flex-row items-start lg:flex-col">
-                  {product.images?.map((image, index) => (
-                    <button
-                      key={index}
-                      type="button"
-                      className="flex-0 aspect-square mb-3 h-40 overflow-hidden rounded-lg border-2 border-gray-900 text-center"
-                    >
-                      <img
-                        className="h-full w-full object-cover"
-                        src={image}
-                        alt={product.productName}
-                      />
-                    </button>
-                  ))}
+                  {product.images && product.images.length > 1 && (
+                    <div className="mt-2 w-full lg:order-1 lg:w-32 lg:flex-shrink-0">
+                      <div className="flex flex-row items-start lg:flex-col">
+                        {product.images.slice(1).map((image, index) => (
+                          <button
+                            key={index}
+                            type="button"
+                            className="flex-0 aspect-square mb-3 h-40 overflow-hidden rounded-lg border-2 border-gray-900 text-center"
+                          >
+                            <img
+                              className="h-full w-full object-cover"
+                              src={image}
+                              alt={product.productName}
+                            />
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
-          </div>
+          </div> 
 
           <div className="lg:col-span-2 lg:row-span-2 lg:row-end-2">
             <h1 className="sm:text-2xl font-bold text-gray-900 sm:text-3xl">
